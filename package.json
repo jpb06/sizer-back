@@ -23,8 +23,7 @@
     "test:ci": "jest --ci --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prisma:merge": "ts-node ./scripts/merge.prisma.schemas.ts && yarn prisma format --schema prisma/schema.prisma",
-    "prisma:gen": "prisma:merge && prisma generate",
+    "prisma:gen": "yarn prisma generate",
     "prisma:seed": "yarn prisma migrate dev && yarn prisma db seed --preview-feature"
   },
   "dependencies": {
