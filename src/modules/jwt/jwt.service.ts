@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '@prisma/client';
+import { plainToClass } from 'class-transformer';
 import * as jwt from 'jsonwebtoken';
 
 import { CacheService } from '@modules/cache/cache.service';
+import { JwtPayloadDto } from '@modules/jwt/dto/jwt.payload.dto';
 
 @Injectable()
 export class JwtService {
@@ -26,5 +28,20 @@ export class JwtService {
     );
 
     return token;
+  }
+
+  async verify(token: string): Promise<JwtPayloadDto | undefined> {
+    const keys = await this.cacheService.getAppKeys();
+
+    try {
+      const payload = jwt.verify(token, keys.publicKey, {
+        algorithms: ['RS256'],
+        ignoreExpiration: false,
+      });
+
+      return plainToClass(JwtPayloadDto, payload);
+    } catch (error) {
+      throw new UnauthorizedException();
+    }
   }
 }
