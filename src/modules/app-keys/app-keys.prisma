@@ -1,6 +1,0 @@
-model AppKeys {
-  id             Int      @id @default(autoincrement())
-  privateKey     String
-  publicKey      String
-  generationDate DateTime
-}
