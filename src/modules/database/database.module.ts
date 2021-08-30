@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
 
-import { DatabaseService } from './database.service';
+import { PrismaModule } from './prisma/prisma.module';
+import { AppKeysService } from './services/app-keys.service';
+import { ChaptersService } from './services/chapters.service';
+import { UsersService } from './services/users.service';
 
 @Module({
-  providers: [DatabaseService],
-  exports: [DatabaseService],
+  imports: [PrismaModule],
+  providers: [ChaptersService, UsersService, AppKeysService],
+  exports: [ChaptersService, UsersService, AppKeysService],
 })
 export class DatabaseModule {}

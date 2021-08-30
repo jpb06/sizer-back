@@ -29,7 +29,7 @@
     "paths": {
       "@tests/*": ["./tests-related/*"],
       "@type/*": ["./types/*"],
-      "@modules/*": ["./modules/*"],
+      "@business/*": ["./modules/business/*"],
       "@database/*": ["./modules/database/*"],
       "@decorators/*": ["./decorators/*"],
       "@filters/*": ["./filters/*"],
