@@ -83,6 +83,7 @@ model ChapterMember {
   idUser    Int      @map("User")
   idChapter Int      @map("Chapter")
   createdAt DateTime @default(now())
+  role      String
   user      User?    @relation(fields: [idUser], references: [id])
   chapter   Chapter? @relation(fields: [idChapter], references: [id])
 }
