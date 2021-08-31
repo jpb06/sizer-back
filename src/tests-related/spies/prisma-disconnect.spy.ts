@@ -6,4 +6,5 @@ export const mockedPrismaDisconnect = (): jest.SpyInstance<
 > =>
   jest
     .spyOn(PrismaClient.prototype, '$disconnect')
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     .mockImplementationOnce(async () => {});

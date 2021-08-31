@@ -4,6 +4,8 @@ const {
   compilerOptions: { paths: tsconfigPaths },
 } = require('./tsconfig');
 
+/** @type {import('@jest/types').Config.InitialOptions} */
+
 module.exports = {
   roots: ['<rootDir>/src/'],
   moduleFileExtensions: ['js', 'json', 'ts'],
@@ -14,9 +16,11 @@ module.exports = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
+  collectCoverage: true,
   collectCoverageFrom: ['**/*.ts'],
+  coverageReporters: ['json-summary', 'text', 'lcov'],
   coveragePathIgnorePatterns: ['/tests-related/', '.dto\\.ts'],
   coverageDirectory: './coverage',
   testEnvironment: 'node',
-  coverageReporters: ['json-summary', 'text', 'lcov'],
+  testTimeout: 10000,
 };
