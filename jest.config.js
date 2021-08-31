@@ -19,4 +19,5 @@ module.exports = {
   coverageDirectory: './coverage',
   testEnvironment: 'node',
   coverageReporters: ['json-summary', 'text', 'lcov'],
+  testTimeout: 10000,
 };

@@ -15,7 +15,7 @@ import { tokenPayloadMockData } from '@tests/data/token-payload.mock-data';
 
 import { AppModule } from '../../app.module';
 
-describe('AuthenticationController (e2e)', () => {
+describe('LoggedUserController (e2e)', () => {
   let app: INestApplication;
   const dbMock = mockDeep<PrismaClient>();
 
@@ -32,34 +32,28 @@ describe('AuthenticationController (e2e)', () => {
   });
 
   describe('POST /logged-user/chapters', () => {
-    it('should return unauthorized if no token is provided', (done) => {
-      request(app.getHttpServer())
+    it('should return unauthorized if no token is provided', () => {
+      return request(app.getHttpServer())
         .get('/logged-user/chapters')
         .send()
         .expect(401, {
           statusCode: 401,
           message: 'Unauthorized',
-        })
-        .then(() => {
-          done();
         });
     });
 
-    it('should return unauthorized if provided token is invalid', (done) => {
-      request(app.getHttpServer())
+    it('should return unauthorized if provided token is invalid', () => {
+      return request(app.getHttpServer())
         .get('/logged-user/chapters')
         .set({ Authorization: 'Bearer token' })
         .send()
         .expect(401, {
           statusCode: 401,
           message: 'Unauthorized',
-        })
-        .then(() => {
-          done();
         });
     });
 
-    it('should return internal server error if something silly happens', (done) => {
+    it('should return internal server error if something silly happens', () => {
       dbMock.appKeys.findFirst.mockResolvedValueOnce(appKeysMockData);
       const token = jwt.sign(tokenPayloadMockData, privateKeyMockData, {
         algorithm: 'RS256',
@@ -69,20 +63,17 @@ describe('AuthenticationController (e2e)', () => {
         throw new Error();
       });
 
-      request(app.getHttpServer())
+      return request(app.getHttpServer())
         .get('/logged-user/chapters')
         .set({ Authorization: `Bearer ${token}` })
         .send()
         .expect(500, {
           statusCode: 500,
           message: 'Internal server error',
-        })
-        .then(() => {
-          done();
         });
     });
 
-    it('should return chapters', (done) => {
+    it('should return chapters', () => {
       dbMock.appKeys.findFirst.mockResolvedValueOnce(appKeysMockData);
       const token = jwt.sign(tokenPayloadMockData, privateKeyMockData, {
         algorithm: 'RS256',
@@ -92,14 +83,11 @@ describe('AuthenticationController (e2e)', () => {
         chaptersWithMembersMockData,
       );
 
-      request(app.getHttpServer())
+      return request(app.getHttpServer())
         .get('/logged-user/chapters')
         .set({ Authorization: `Bearer ${token}` })
         .send()
-        .expect(200)
-        .then(() => {
-          done();
-        });
+        .expect(200);
     });
   });
 });
