@@ -33,39 +33,45 @@ describe('AuthenticationController (e2e)', () => {
   });
 
   describe('POST /authentication/login', () => {
-    it('should return unauthorized if provided token is invalid', async () => {
+    it('should return unauthorized if provided token is invalid', (done) => {
       mockOAuth2ClientVerifyIdToken(undefined);
 
-      return request(app.getHttpServer())
+      request(app.getHttpServer())
         .post('/authentication/login')
         .send({ token: 'cool' })
         .expect(401, {
           statusCode: 401,
           message: 'Unauthorized',
+        })
+        .then(() => {
+          done();
         });
     });
 
-    it('should return internal server error if something silly happens', async () => {
+    it('should return internal server error if something silly happens', (done) => {
       mockOAuth2ClientVerifyIdToken(googleAuthTokenPayloadMockData);
       dbMock.user.findFirst.mockImplementation(() => {
         throw new Error();
       });
 
-      return request(app.getHttpServer())
+      request(app.getHttpServer())
         .post('/authentication/login')
         .send({ token: 'cool' })
         .expect(500, {
           statusCode: 500,
           message: 'Internal server error',
+        })
+        .then(() => {
+          done();
         });
     });
 
-    it('should return an app token signed with an existing key for an existing user', async () => {
+    it('should return an app token signed with an existing key for an existing user', (done) => {
       mockOAuth2ClientVerifyIdToken(googleAuthTokenPayloadMockData);
       dbMock.user.findFirst.mockResolvedValueOnce(dbaseUserMockData);
       dbMock.appKeys.findFirst.mockResolvedValueOnce(appKeysMockData);
 
-      return request(app.getHttpServer())
+      request(app.getHttpServer())
         .post('/authentication/login')
         .send({ token: 'cool' })
         .expect(201)
@@ -78,16 +84,17 @@ describe('AuthenticationController (e2e)', () => {
           const decoded = jwt.decode(res.body.token);
           expect(res.body.token.split('.')).toHaveLength(3);
           expect(decoded).toMatchObject(tokenPayloadMockData);
+          done();
         });
     });
 
-    it('should return an app token signed with an existing key for a new user', async () => {
+    it('should return an app token signed with an existing key for a new user', (done) => {
       mockOAuth2ClientVerifyIdToken(googleAuthTokenPayloadMockData);
       dbMock.user.findFirst.mockResolvedValueOnce(null);
       dbMock.user.create.mockResolvedValueOnce(dbaseUserMockData);
       dbMock.appKeys.findFirst.mockResolvedValueOnce(appKeysMockData);
 
-      return request(app.getHttpServer())
+      request(app.getHttpServer())
         .post('/authentication/login')
         .send({ token: 'cool' })
         .expect(201)
@@ -100,16 +107,17 @@ describe('AuthenticationController (e2e)', () => {
           const decoded = jwt.decode(res.body.token);
           expect(res.body.token.split('.')).toHaveLength(3);
           expect(decoded).toMatchObject(tokenPayloadMockData);
+          done();
         });
     });
 
-    it('should return an app token signed with a new key', async () => {
+    it('should return an app token signed with a new key', (done) => {
       mockOAuth2ClientVerifyIdToken(googleAuthTokenPayloadMockData);
       dbMock.user.findFirst.mockResolvedValueOnce(dbaseUserMockData);
       dbMock.appKeys.findFirst.mockResolvedValueOnce(null);
       dbMock.appKeys.create.mockResolvedValueOnce(appKeysMockData);
 
-      return request(app.getHttpServer())
+      request(app.getHttpServer())
         .post('/authentication/login')
         .send({ token: 'cool' })
         .expect(201)
@@ -122,6 +130,7 @@ describe('AuthenticationController (e2e)', () => {
           const decoded = jwt.decode(res.body.token);
           expect(res.body.token.split('.')).toHaveLength(3);
           expect(decoded).toMatchObject(tokenPayloadMockData);
+          done();
         });
     });
 
