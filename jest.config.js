@@ -15,6 +15,7 @@ module.exports = {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
   collectCoverageFrom: ['**/*.ts'],
+  testResultsProcessor: 'jest-sonar-reporter',
   coveragePathIgnorePatterns: ['/tests-related/', '.dto\\.ts'],
   coverageDirectory: './coverage',
   testEnvironment: 'node',
