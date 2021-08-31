@@ -1,0 +1,22 @@
+export const dbaseUserMockData = {
+  id: 1,
+  userIdentifier: '1',
+  issuerIdentifier: 'accounts.google.com',
+  accessTokenHash: 'hash',
+  authorizedPresenter: 'sizer.apps.googleusercontent.com',
+  isEmailVerified: true,
+  email: 'j*********@gmail.com',
+  profileUrl: null,
+  pictureUrl:
+    'https://lh3.googleusercontent.com/a/AATXAJxsq-EKfFChzFHmzL26xeqonbP6-rs9LvfyyfEB=s96-c',
+  fullName: 'J*****************',
+  givenName: 'J************',
+  familyName: 'B***',
+  audience: 'sizer.apps.googleusercontent.com',
+  issuedAt: 1630234539,
+  expires: 1630238139,
+  nonce: null,
+  hostedGSuiteDomain: null,
+  locale: 'fr',
+  createdAt: new Date(),
+};
