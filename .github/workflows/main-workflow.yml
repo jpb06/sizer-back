@@ -6,7 +6,7 @@ on:
     types: [opened, synchronize, reopened]
 name: Main workflow
 jobs:
-  install:
+  tests:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -40,6 +40,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --prefer-offline
+
+      - name: Linting
+        run: yarn lint
 
       - name: Tests
         run: yarn test:ci
