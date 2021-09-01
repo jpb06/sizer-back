@@ -19,6 +19,10 @@ export class ChapterMemberDto {
 
   @Expose()
   @ApiProperty()
+  pictureUrl: string;
+
+  @Expose()
+  @ApiProperty()
   role: string;
 }
 

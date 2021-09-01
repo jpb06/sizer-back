@@ -10,7 +10,10 @@ import {
   appKeysMockData,
   privateKeyMockData,
 } from '@tests/data/app-keys.mock-data';
-import { chaptersWithMembersMockData } from '@tests/data/chapters-with-members.mock-data';
+import {
+  chaptersWithMembersMockData,
+  ChapterWithMembers,
+} from '@tests/data/chapters-with-members.mock-data';
 import { tokenPayloadMockData } from '@tests/data/token-payload.mock-data';
 
 import { AppModule } from '../../app.module';
@@ -87,7 +90,24 @@ describe('LoggedUserController (e2e)', () => {
         .get('/logged-user/chapters')
         .set({ Authorization: `Bearer ${token}` })
         .send()
-        .expect(200);
+        .expect(200)
+        .then((res) => {
+          expect(res.body).toStrictEqual(
+            (chaptersWithMembersMockData as unknown as ChapterWithMembers).map(
+              (el) => ({
+                id: el.id,
+                name: el.name,
+                members: el.chapterMembers.map((m) => ({
+                  idUser: m.idUser,
+                  role: m.role,
+                  fullName: m.user?.fullName,
+                  pictureUrl: m.user?.pictureUrl,
+                  email: m.user?.email,
+                })),
+              }),
+            ),
+          );
+        });
     });
   });
 });
