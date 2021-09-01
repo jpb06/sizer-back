@@ -16,7 +16,7 @@ export class ChaptersService {
         chapterMembers: {
           select: {
             idUser: true,
-            user: { select: { fullName: true, email: true } },
+            user: { select: { fullName: true, email: true, pictureUrl: true } },
             role: true,
           },
         },
@@ -32,6 +32,7 @@ export class ChaptersService {
           role: m.role,
           fullName: m.user?.fullName,
           email: m.user?.email,
+          pictureUrl: m.user?.pictureUrl,
         })),
       }),
     );
