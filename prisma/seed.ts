@@ -114,6 +114,16 @@ const seed = async () => {
       role: 'Owner',
     },
   });
+  await prisma.chapterMember.upsert({
+    where: { id: 4 },
+    update: {},
+    create: {
+      id: 4,
+      idChapter: 3,
+      idUser: 1,
+      role: 'Owner',
+    },
+  });
 };
 
 seed()
