@@ -15,67 +15,70 @@ model AppKeys {
 }
 
 model User {
-  id                  Int             @id @default(autoincrement())
-  createdAt           DateTime        @default(now())
+  id                  Int                 @id @default(autoincrement())
+  createdAt           DateTime            @default(now())
   // The Issuer Identifier for the Issuer of the response. Always https://accounts.google.com or accounts.google.com for Google ID tokens.
-  issuerIdentifier    String          @map("iss")
+  issuerIdentifier    String              @map("iss")
   // Access token hash. Provides validation that the access token is tied to the identity token. If the ID token is issued with an access token in the server flow, this is always included.
   // This can be used as an alternate mechanism to protect against cross-site request forgery attacks, but if you follow Step 1 and Step 3 it is not necessary to verify the access token.
-  accessTokenHash     String?         @map("at_hash")
+  accessTokenHash     String?             @map("at_hash")
   // An identifier for the user, unique among all Google accounts and never reused. A Google account can have multiple emails at different points in time, but the sub value is never changed.
   // Use sub within your application as the unique-identifier key for the user.
-  userIdentifier      String          @map("sub")
+  userIdentifier      String              @map("sub")
   // The client_id of the authorized presenter. This claim is only needed when the party requesting the ID token is not the same as the audience of the ID token.
   // This may be the case at Google for hybrid apps where a web application and Android app have a different client_id but share the same project.
-  authorizedPresenter String?         @map("azp")
+  authorizedPresenter String?             @map("azp")
   // True if the user's e-mail address has been verified; otherwise false.
-  isEmailVerified     Boolean?        @map("email_verified")
+  isEmailVerified     Boolean?            @map("email_verified")
   // The user's email address. This may not be unique and is not suitable for use as a primary key. Provided only if your scope included the string "email".
   email               String?
   // The URL of the user's profile page. Might be provided when:
   // - The request scope included the string "profile"
   // - The ID token is returned from a token refresh
   // - When profile claims are present, you can use them to update your app's user records. Note that this claim is never guaranteed to be present.
-  profileUrl          String?         @map("profile")
+  profileUrl          String?             @map("profile")
   // The URL of the user's profile picture. Might be provided when:
   // - The request scope included the string "profile"
   // - The ID token is returned from a token refresh
   // - When picture claims are present, you can use them to update your app's user records. Note that this claim is never guaranteed to be present.
-  pictureUrl          String?         @map("picture")
+  pictureUrl          String?             @map("picture")
   // The user's full name, in a displayable form. Might be provided when:
   // - The request scope included the string "profile"
   // - The ID token is returned from a token refresh
   // - When name claims are present, you can use them to update your app's user records. Note that this claim is never guaranteed to be present.
-  fullName            String?         @map("name")
+  fullName            String?             @map("name")
   // The user's given name, in a displayable form. Might be provided when:
   // - The request scope included the string "profile"
   // - The ID token is returned from a token refresh
   // - When name claims are present, you can use them to update your app's user records. Note that this claim is never guaranteed to be present.
-  givenName           String?         @map("given_name")
+  givenName           String?             @map("given_name")
   // The user's family name, in a displayable form. Might be provided when:
   // - The request scope included the string "profile"
   // - The ID token is returned from a token refresh
   // - When name claims are present, you can use them to update your app's user records. Note that this claim is never guaranteed to be present.
-  familyName          String?         @map("family_name")
+  familyName          String?             @map("family_name")
   // Identifies the audience that this ID token is intended for. It must be one of the OAuth 2.0 client IDs of your application.
-  audience            String          @map("aud")
+  audience            String              @map("aud")
   // The time the ID token was issued, represented in Unix time (integer seconds).
-  issuedAt            Int             @map("iat")
+  issuedAt            Int                 @map("iat")
   // The time the ID token expires, represented in Unix time (integer seconds).
-  expires             Int             @map("exp")
+  expires             Int                 @map("exp")
   // The value of the nonce supplied by your app in the authentication request. You should enforce protection against replay attacks by ensuring it is presented only once.
   nonce               String?
   // The hosted G Suite domain of the user. Provided only if the user belongs to a hosted domain.
-  hostedGSuiteDomain  String?         @map("hd")
+  hostedGSuiteDomain  String?             @map("hd")
   // The user's locale, represented by a BCP 47 language tag. Might be provided when a name claim is present.
   locale              String?
   chapters            ChapterMember[]
+  SubjectDiscussion   SubjectDiscussion[]
 }
 
 model Chapter {
   id             Int             @id @default(autoincrement())
   name           String
   chapterMembers ChapterMember[]
+  subjects       Subject[]
+
 }
 
 model ChapterMember {
@@ -86,4 +89,28 @@ model ChapterMember {
   role      String
   user      User?    @relation(fields: [idUser], references: [id])
   chapter   Chapter? @relation(fields: [idChapter], references: [id])
+}
+
+model Subject {
+  id         Int                 @id @default(autoincrement())
+  idChapter  Int                 @map("Chapter")
+  title      String
+  details    String?
+  link       String?
+  createdAt  DateTime            @default(now())
+  closedAt   DateTime?
+  answer     String?
+  discussion SubjectDiscussion[]
+  Chapter    Chapter?            @relation(fields: [idChapter], references: [id])
+}
+
+model SubjectDiscussion {
+  id        Int      @id @default(autoincrement())
+  idSubject Int      @map("Subject")
+  idUser    Int      @map("User")
+  comment   String
+  link      String?
+  createdAt DateTime @default(now())
+  Subject   Subject? @relation(fields: [idSubject], references: [id])
+  User      User?    @relation(fields: [idUser], references: [id])
 }

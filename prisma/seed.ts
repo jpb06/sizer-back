@@ -124,6 +124,66 @@ const seed = async () => {
       role: 'Owner',
     },
   });
+
+  await prisma.subject.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      id: 1,
+      idChapter: 1,
+      title: 'Cool subject',
+      details: 'So cool',
+      link: 'https://cool.org',
+      createdAt: new Date(),
+    },
+  });
+  await prisma.subjectDiscussion.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      id: 1,
+      idUser: 1,
+      idSubject: 1,
+      comment: 'I like this very much',
+      createdAt: new Date(),
+    },
+  });
+  await prisma.subjectDiscussion.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+      id: 2,
+      idUser: 2,
+      idSubject: 1,
+      comment: "Yeah nah yeah; we're cool",
+      link: 'https://so-cool.org',
+      createdAt: new Date(),
+    },
+  });
+
+  await prisma.subject.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+      id: 2,
+      idChapter: 1,
+      title: 'Awesome subject',
+      details: 'This is awesome dude',
+      createdAt: new Date(),
+    },
+  });
+
+  await prisma.subject.upsert({
+    where: { id: 3 },
+    update: {},
+    create: {
+      id: 3,
+      idChapter: 1,
+      title: 'About time we do this...',
+      details: 'What are we waiting for?',
+      createdAt: new Date(),
+    },
+  });
 };
 
 seed()
