@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { plainToClass } from 'class-transformer';
 
-import { ChapterWithMembersDto } from '../dto/chapter-with-members.dto';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class ChaptersService {
   constructor(private readonly db: PrismaService) {}
 
-  async getAll(): Promise<Array<ChapterWithMembersDto>> {
+  async getAll() {
     const data = await this.db.chapter.findMany({
       select: {
         id: true,
@@ -23,22 +21,20 @@ export class ChaptersService {
       },
     });
 
-    return data.map((c) =>
-      plainToClass(ChapterWithMembersDto, {
-        id: c.id,
-        name: c.name,
-        members: c.chapterMembers.map((m) => ({
-          idUser: m.idUser,
-          role: m.role,
-          fullName: m.user?.fullName,
-          email: m.user?.email,
-          pictureUrl: m.user?.pictureUrl,
-        })),
-      }),
-    );
+    return data.map((c) => ({
+      id: c.id,
+      name: c.name,
+      members: c.chapterMembers.map((m) => ({
+        idUser: m.idUser,
+        role: m.role,
+        fullName: m.user?.fullName,
+        email: m.user?.email,
+        pictureUrl: m.user?.pictureUrl,
+      })),
+    }));
   }
 
-  async getBy(idUser: number): Promise<Array<ChapterWithMembersDto>> {
+  async getBy(idUser: number) {
     const chapters = await this.getAll();
 
     return chapters.filter((c) => c.members.some((m) => m.idUser === idUser));
