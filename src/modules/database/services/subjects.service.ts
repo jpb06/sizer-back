@@ -13,7 +13,7 @@ export class SubjectsService {
     const createdSubject = await this.db.subject.create({
       data: newSubject,
       include: {
-        Chapter: {
+        chapter: {
           select: {
             id: true,
             name: true,
@@ -22,10 +22,7 @@ export class SubjectsService {
       },
     });
 
-    return {
-      ...createdSubject,
-      chapter: { ...createdSubject.Chapter },
-    };
+    return createdSubject;
   }
 
   async getByChapter(idChapter: number) {
@@ -40,7 +37,7 @@ export class SubjectsService {
   async getByUser(idUser: number) {
     return this.db.subject.findMany({
       where: {
-        Chapter: { chapterMembers: { some: { idUser } } },
+        chapter: { members: { some: { idUser } } },
       },
       select: chapterSubjectQuery,
     });

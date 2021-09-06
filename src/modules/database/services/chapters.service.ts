@@ -11,7 +11,7 @@ export class ChaptersService {
       select: {
         id: true,
         name: true,
-        chapterMembers: {
+        members: {
           select: {
             idUser: true,
             user: { select: { fullName: true, email: true, pictureUrl: true } },
@@ -24,7 +24,7 @@ export class ChaptersService {
     return data.map((c) => ({
       id: c.id,
       name: c.name,
-      members: c.chapterMembers.map((m) => ({
+      members: c.members.map((m) => ({
         idUser: m.idUser,
         role: m.role,
         fullName: m.user?.fullName,

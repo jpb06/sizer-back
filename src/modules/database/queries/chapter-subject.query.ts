@@ -8,7 +8,7 @@ export const chapterSubjectQuery: Prisma.SubjectSelect = {
   closedAt: true,
   createdAt: true,
   link: true,
-  Chapter: {
+  chapter: {
     select: { id: true, name: true },
   },
   discussion: {
@@ -18,7 +18,7 @@ export const chapterSubjectQuery: Prisma.SubjectSelect = {
       comment: true,
       link: true,
       createdAt: true,
-      User: { select: { fullName: true, email: true } },
+      user: { select: { fullName: true, email: true } },
     },
   },
 };
