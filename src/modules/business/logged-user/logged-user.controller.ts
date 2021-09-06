@@ -3,13 +3,13 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
 
 import { LoggedUserRequest } from '@business/authentication/types/logged-user-request.interface';
-import { ChaptersSubjectsService } from '@database/services/chapters-subjects.service';
 import { ChaptersService } from '@database/services/chapters.service';
+import { SubjectsService } from '@database/services/subjects.service';
 import { ApiRoute } from '@decorators/api-route';
 
 import { JwtAuthGuard } from '../authentication/guards/jwt-auth.guard';
-import { ChaptersSubjectsResultDto } from './dto/output/chapters-subjects.result.dto';
 import { ChaptersWithMembersResultDto } from './dto/output/chapters-with-members.result.dto';
+import { SubjectsResultDto } from './dto/output/subjects.result.dto';
 
 @Controller('logged-user')
 @ApiTags('Logged users')
@@ -18,7 +18,7 @@ import { ChaptersWithMembersResultDto } from './dto/output/chapters-with-members
 export class LoggedUserController {
   constructor(
     private readonly chaptersService: ChaptersService,
-    private readonly chaptersSubjectsService: ChaptersSubjectsService,
+    private readonly subjectsService: SubjectsService,
   ) {}
 
   @Get('chapters')
@@ -42,12 +42,12 @@ export class LoggedUserController {
     summary: "Logged user's subjects",
     description: 'Gets the subjects this user has access to',
     ok: {
-      type: ChaptersSubjectsResultDto,
+      type: SubjectsResultDto,
       description: 'The list of subjects',
     },
   })
   async getSubjects(@Request() { loggedUser: { id } }: LoggedUserRequest) {
-    const subjects = await this.chaptersSubjectsService.getByChapter(id);
-    return plainToClass(ChaptersSubjectsResultDto, { data: subjects });
+    const subjects = await this.subjectsService.getByChapter(id);
+    return plainToClass(SubjectsResultDto, { data: subjects });
   }
 }

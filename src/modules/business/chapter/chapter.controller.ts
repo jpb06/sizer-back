@@ -8,8 +8,8 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
 
-import { ChaptersSubjectsResultDto } from '@business/logged-user/dto/output/chapters-subjects.result.dto';
-import { ChaptersSubjectsService } from '@database/services/chapters-subjects.service';
+import { SubjectsResultDto } from '@business/logged-user/dto/output/subjects.result.dto';
+import { SubjectsService } from '@database/services/subjects.service';
 import { ApiRoute } from '@decorators/api-route';
 
 import { JwtAuthGuard } from '../authentication/guards/jwt-auth.guard';
@@ -19,21 +19,19 @@ import { JwtAuthGuard } from '../authentication/guards/jwt-auth.guard';
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class ChapterController {
-  constructor(
-    private readonly chaptersSubjectsService: ChaptersSubjectsService,
-  ) {}
+  constructor(private readonly subjectsService: SubjectsService) {}
 
   @Get(':id/subjects')
   @ApiRoute({
     summary: "Chapter's subjects",
     description: "Gets the chapter's subjects",
     ok: {
-      type: ChaptersSubjectsResultDto,
+      type: SubjectsResultDto,
       description: 'The list of subjects',
     },
   })
   async getChaptersSubjects(@Param('id', new ParseIntPipe()) id: number) {
-    const subjects = await this.chaptersSubjectsService.getByChapter(id);
-    return plainToClass(ChaptersSubjectsResultDto, { data: subjects });
+    const subjects = await this.subjectsService.getByChapter(id);
+    return plainToClass(SubjectsResultDto, { data: subjects });
   }
 }

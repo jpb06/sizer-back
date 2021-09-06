@@ -13,7 +13,7 @@ export class SubjectWithDiscussionsDto extends SubjectDto {
 }
 
 @Exclude()
-export class ChaptersSubjectsResultDto {
+export class SubjectsResultDto {
   @Expose()
   @ApiProperty({ isArray: true, type: SubjectWithDiscussionsDto })
   @Type(() => SubjectWithDiscussionsDto)

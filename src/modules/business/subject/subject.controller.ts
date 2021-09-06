@@ -2,7 +2,7 @@ import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
 
-import { ChaptersSubjectsService } from '@database/services/chapters-subjects.service';
+import { SubjectsService } from '@database/services/subjects.service';
 import { ApiRoute } from '@decorators/api-route';
 
 import { JwtAuthGuard } from '../authentication/guards/jwt-auth.guard';
@@ -14,9 +14,7 @@ import { CreateSubjectResultDto } from './dto/output/create-subject.result.dto';
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class SubjectController {
-  constructor(
-    private readonly chaptersSubjectsService: ChaptersSubjectsService,
-  ) {}
+  constructor(private readonly subjectsService: SubjectsService) {}
 
   @Post()
   @ApiRoute({
@@ -29,7 +27,7 @@ export class SubjectController {
   })
   @Post()
   async createSubject(@Body() subject: NewSubjectDto) {
-    const createdSubject = await this.chaptersSubjectsService.create(subject);
+    const createdSubject = await this.subjectsService.create(subject);
     return plainToClass(CreateSubjectResultDto, { data: createdSubject });
   }
 }

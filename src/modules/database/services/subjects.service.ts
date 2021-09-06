@@ -6,7 +6,7 @@ import { chapterSubjectQuery } from '@database/queries/chapter-subject.query';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
-export class ChaptersSubjectsService {
+export class SubjectsService {
   constructor(private readonly db: PrismaService) {}
 
   async create(newSubject: NewSubjectDto) {
