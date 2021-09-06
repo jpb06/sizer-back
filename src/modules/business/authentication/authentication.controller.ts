@@ -2,11 +2,11 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
 
+import { LoginResultDto } from '@business/authentication/dto/output/login.result.dto';
 import { ApiRoute } from '@decorators/api-route';
 
 import { AuthenticationService } from './authentication.service';
-import { LoginBodyDto } from './dto/login.body.dto';
-import { LoginResultDto } from './dto/login.result.dto';
+import { LoginBodyDto } from './dto/input/login.body.dto';
 
 @Controller('authentication')
 @ApiTags('Users')
@@ -20,8 +20,8 @@ export class AuthenticationController {
     description: 'Authenticates a user from his google auth token',
     created: { type: LoginResultDto, description: 'Authentication succeeded' },
   })
-  async login(@Body() { token }: LoginBodyDto): Promise<LoginResultDto> {
+  async login(@Body() { token }: LoginBodyDto) {
     const appToken = await this.authenticationService.validateUser(token);
-    return plainToClass(LoginResultDto, { token: appToken });
+    return plainToClass(LoginResultDto, { data: { token: appToken } });
   }
 }
