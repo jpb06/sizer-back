@@ -92,7 +92,7 @@ describe('LoggedUserController (e2e)', () => {
         .send()
         .expect(200)
         .then((res) => {
-          expect(res.body).toStrictEqual(
+          expect(res.body.data).toStrictEqual(
             (chaptersWithMembersMockData as unknown as ChapterWithMembers).map(
               (el) => ({
                 id: el.id,
