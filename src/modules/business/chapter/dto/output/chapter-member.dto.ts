@@ -1,7 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude, Expose, Type } from 'class-transformer';
-
-import { ChapterDto } from './chapter.dto';
+import { Exclude, Expose } from 'class-transformer';
 
 @Exclude()
 export class ChapterMemberDto {
@@ -24,12 +22,4 @@ export class ChapterMemberDto {
   @Expose()
   @ApiProperty()
   role: string;
-}
-
-@Exclude()
-export class ChapterWithMembersDto extends ChapterDto {
-  @Expose()
-  @Type(() => ChapterMemberDto)
-  @ApiProperty()
-  members: Array<ChapterMemberDto>;
 }
