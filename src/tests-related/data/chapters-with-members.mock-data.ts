@@ -2,7 +2,8 @@ import { Chapter } from '@prisma/client';
 
 export type ChapterWithMembers = {
   id: number;
-  chapterMembers: {
+  name: string;
+  members: {
     user: {
       email: string | null;
       pictureUrl: string | null;
@@ -11,14 +12,13 @@ export type ChapterWithMembers = {
     idUser: number;
     role: string;
   }[];
-  name: string;
 }[];
 
 export const chaptersWithMembersMockData = [
   {
     id: 1,
     name: 'Cool chapter',
-    chapterMembers: [
+    members: [
       {
         idUser: 1,
         user: {
@@ -42,7 +42,7 @@ export const chaptersWithMembersMockData = [
   {
     id: 2,
     name: 'Great chapter',
-    chapterMembers: [
+    members: [
       {
         idUser: 1,
         user: {
