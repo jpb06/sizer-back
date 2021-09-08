@@ -1,4 +1,18 @@
+import { Chapter, Subject } from '@prisma/client';
+
 import { selectSubject } from '../prisma/helpers/subject.selector';
+
+export type ChapterSubjectSelectType = Partial<Subject> & {
+  chapter: Chapter | null;
+  discussion: Array<{
+    id: number;
+    idUser: number;
+    comment: string;
+    link: string | null;
+    createdAt: Date;
+    user: { fullName: string | null; email: string | null } | null;
+  }>;
+};
 
 export const chapterSubjectSelect = selectSubject({
   id: true,
