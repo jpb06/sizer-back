@@ -1,6 +1,6 @@
-import { Prisma } from '@prisma/client';
+import { selectSubject } from '../prisma/helpers/subject.selector';
 
-export const chapterSubjectQuery: Prisma.SubjectSelect = {
+export const chapterSubjectSelect = selectSubject({
   id: true,
   title: true,
   details: true,
@@ -21,4 +21,4 @@ export const chapterSubjectQuery: Prisma.SubjectSelect = {
       user: { select: { fullName: true, email: true } },
     },
   },
-};
+});

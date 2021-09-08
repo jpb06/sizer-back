@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { NewSubjectDto } from '@business/subject/dto/input/new-subject.body.dto';
-import { chapterSubjectQuery } from '@database/queries/chapter-subject.query';
+import { chapterSubjectSelect } from '@database/selects/chapter-subject.select';
 
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -30,7 +30,7 @@ export class SubjectsService {
       where: {
         idChapter,
       },
-      select: chapterSubjectQuery,
+      select: chapterSubjectSelect,
     });
   }
 
@@ -39,7 +39,7 @@ export class SubjectsService {
       where: {
         chapter: { members: { some: { idUser } } },
       },
-      select: chapterSubjectQuery,
+      select: chapterSubjectSelect,
     });
   }
 }
