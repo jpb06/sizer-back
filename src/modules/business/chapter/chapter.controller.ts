@@ -6,7 +6,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { plainToClass } from 'class-transformer';
+import { subjectsResultDtoTransformer } from '@transformers/subjects-result-dto.transformer';
 
 import { SubjectsResultDto } from '@business/logged-user/dto/output/subjects.result.dto';
 import { SubjectsService } from '@database/services/subjects.service';
@@ -32,6 +32,7 @@ export class ChapterController {
   })
   async getChaptersSubjects(@Param('id', new ParseIntPipe()) id: number) {
     const subjects = await this.subjectsService.getByChapter(id);
-    return plainToClass(SubjectsResultDto, { data: subjects });
+
+    return subjectsResultDtoTransformer(subjects);
   }
 }

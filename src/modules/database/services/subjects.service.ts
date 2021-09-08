@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 import { NewSubjectDto } from '@business/subject/dto/input/new-subject.body.dto';
-import { chapterSubjectSelect } from '@database/selects/chapter-subject.select';
+import {
+  chapterSubjectSelect,
+  ChapterSubjectSelectType,
+} from '@database/selects/chapter-subject.select';
 
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -25,7 +28,9 @@ export class SubjectsService {
     return createdSubject;
   }
 
-  async getByChapter(idChapter: number) {
+  async getByChapter(
+    idChapter: number,
+  ): Promise<Array<ChapterSubjectSelectType>> {
     return this.db.subject.findMany({
       where: {
         idChapter,
@@ -34,7 +39,7 @@ export class SubjectsService {
     });
   }
 
-  async getByUser(idUser: number) {
+  async getByUser(idUser: number): Promise<Array<ChapterSubjectSelectType>> {
     return this.db.subject.findMany({
       where: {
         chapter: { members: { some: { idUser } } },
