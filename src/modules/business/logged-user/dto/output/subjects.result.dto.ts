@@ -9,7 +9,7 @@ export class SubjectWithDiscussionsDto extends SubjectDto {
   @Expose()
   @ApiProperty({ isArray: true, type: DiscussionDto })
   @Type(() => DiscussionDto)
-  dicussion: Array<DiscussionDto>;
+  discussion: Array<DiscussionDto>;
 }
 
 @Exclude()
