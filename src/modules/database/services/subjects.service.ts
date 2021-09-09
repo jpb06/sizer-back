@@ -13,7 +13,7 @@ export class SubjectsService {
   constructor(private readonly db: PrismaService) {}
 
   async create(newSubject: NewSubjectDto) {
-    const createdSubject = await this.db.subject.create({
+    return this.db.subject.create({
       data: newSubject,
       include: {
         chapter: {
@@ -24,8 +24,6 @@ export class SubjectsService {
         },
       },
     });
-
-    return createdSubject;
   }
 
   async getByChapter(
