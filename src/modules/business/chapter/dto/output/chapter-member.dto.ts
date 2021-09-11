@@ -9,15 +9,15 @@ export class ChapterMemberDto {
 
   @Expose()
   @ApiProperty()
-  fullName: string;
+  userFullName: string;
 
   @Expose()
   @ApiProperty()
-  email: string;
+  userEmail: string;
 
   @Expose()
   @ApiProperty()
-  pictureUrl: string;
+  userPictureUrl: string;
 
   @Expose()
   @ApiProperty()

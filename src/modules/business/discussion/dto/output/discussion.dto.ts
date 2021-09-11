@@ -13,7 +13,7 @@ export class DiscussionDto {
 
   @Expose()
   @ApiProperty()
-  userFullname: string;
+  userFullName: string;
 
   @Expose()
   @ApiProperty()
