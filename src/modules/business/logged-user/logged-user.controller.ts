@@ -1,7 +1,6 @@
 import { Controller, Get, Request, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { subjectsResultDtoTransformer } from '@transformers/subjects-result-dto.transformer';
-import { plainToClass } from 'class-transformer';
+import { transformTo } from '@util/transform-to.util';
 
 import { LoggedUserRequest } from '@business/authentication/types/logged-user-request.interface';
 import { ChaptersService } from '@database/services/chapters.service';
@@ -35,7 +34,8 @@ export class LoggedUserController {
     @Request() { loggedUser: { id } }: LoggedUserRequest,
   ) {
     const chapters = await this.chaptersService.getBy(id);
-    return plainToClass(ChaptersWithMembersResultDto, { data: chapters });
+
+    return transformTo(ChaptersWithMembersResultDto, chapters);
   }
 
   @Get('subjects')
@@ -50,6 +50,6 @@ export class LoggedUserController {
   async getSubjects(@Request() { loggedUser: { id } }: LoggedUserRequest) {
     const subjects = await this.subjectsService.getByUser(id);
 
-    return subjectsResultDtoTransformer(subjects);
+    return transformTo(SubjectsResultDto, subjects);
   }
 }

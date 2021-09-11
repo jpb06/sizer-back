@@ -34,7 +34,7 @@
       "@decorators/*": ["./decorators/*"],
       "@filters/*": ["./filters/*"],
       "@pipes/*": ["./pipes/*"],
-      "@transformers/*": ["./transformers/*"]
+      "@util/*": ["./util/*"]
     }
   }
 }
