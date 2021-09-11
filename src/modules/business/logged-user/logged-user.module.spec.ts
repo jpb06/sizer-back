@@ -102,9 +102,9 @@ describe('LoggedUserController (e2e)', () => {
               members: el.members.map((m) => ({
                 idUser: m.idUser,
                 role: m.role,
-                fullName: m.user?.fullName,
-                pictureUrl: m.user?.pictureUrl,
-                email: m.user?.email,
+                userFullName: m.user?.fullName,
+                userPictureUrl: m.user?.pictureUrl,
+                userEmail: m.user?.email,
               })),
             })),
           });
@@ -177,11 +177,12 @@ describe('LoggedUserController (e2e)', () => {
               createdAt: el.createdAt.toISOString(),
               closedAt: el.closedAt,
               answer: el.answer,
-              chapter: el.chapter,
+              chapterId: el.chapter.id,
+              chapterName: el.chapter.name,
               discussion: el.discussion.map((e) => ({
                 id: e.id,
                 idUser: e.idUser,
-                userFullname: e.user?.fullName,
+                userFullName: e.user?.fullName,
                 userEmail: e.user?.email,
                 comment: e.comment,
                 link: e.link,

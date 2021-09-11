@@ -89,7 +89,8 @@ describe('SubjectController (e2e)', () => {
           expect(res.body).toStrictEqual({
             data: {
               id: createdSubjectMockData.id,
-              chapter: createdSubjectMockData.chapter,
+              chapterId: createdSubjectMockData.chapter.id,
+              chapterName: createdSubjectMockData.chapter.name,
               title: createdSubjectMockData.title,
               answer: createdSubjectMockData.answer,
               link: createdSubjectMockData.link,
