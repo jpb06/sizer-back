@@ -1,0 +1,2 @@
+-- AddForeignKey
+ALTER TABLE "SubjectDiscussion" ADD FOREIGN KEY ("User") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -33,7 +33,8 @@
       "@database/*": ["./modules/database/*"],
       "@decorators/*": ["./decorators/*"],
       "@filters/*": ["./filters/*"],
-      "@pipes/*": ["./pipes/*"]
+      "@pipes/*": ["./pipes/*"],
+      "@util/*": ["./util/*"]
     }
   }
 }

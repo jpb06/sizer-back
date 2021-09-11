@@ -10,8 +10,8 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-import { ApiResponseDto } from '@type/dto/api-response.dto';
-import { BadRequestDto } from '@type/dto/bad-request-response.dto';
+import { ApiResponseDto } from './dto/api-response.dto';
+import { BadRequestDto } from './dto/bad-request-response.dto';
 
 interface DefaultResponsesInput {
   summary: string;

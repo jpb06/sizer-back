@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import * as dotenv from 'dotenv-flow';
+dotenv.config();
 
 const prisma = new PrismaClient();
 
@@ -7,11 +9,10 @@ const seed = async () => {
     where: { id: 1 },
     update: {},
     create: {
-      id: 1,
       createdAt: '2021-08-29T08:55:42.834Z',
       issuerIdentifier: 'accounts.google.com',
       accessTokenHash: 'yolo',
-      userIdentifier: '123',
+      userIdentifier: process.env.ACCOUNT1_SUB || 'ACCOUNT1_SUB',
       authorizedPresenter: 'sizer.apps.googleusercontent.com',
       isEmailVerified: true,
       email: 'j*********@gmail.com',
@@ -34,11 +35,10 @@ const seed = async () => {
     where: { id: 2 },
     update: {},
     create: {
-      id: 2,
       createdAt: '2021-08-29T08:53:35.430Z',
       issuerIdentifier: 'accounts.google.com',
       accessTokenHash: 'cool',
-      userIdentifier: '124',
+      userIdentifier: process.env.ACCOUNT2_SUB || 'ACCOUNT2_SUB',
       authorizedPresenter: 'sizer.apps.googleusercontent.com',
       isEmailVerified: true,
       email: 'y*****@gmail.com',
@@ -61,7 +61,6 @@ const seed = async () => {
     where: { id: 1 },
     update: {},
     create: {
-      id: 1,
       name: 'Quality',
     },
   });
@@ -70,7 +69,6 @@ const seed = async () => {
     where: { id: 2 },
     update: {},
     create: {
-      id: 2,
       name: 'Frontend',
     },
   });
@@ -79,7 +77,6 @@ const seed = async () => {
     where: { id: 3 },
     update: {},
     create: {
-      id: 3,
       name: 'Backend',
     },
   });
@@ -88,7 +85,6 @@ const seed = async () => {
     where: { id: 1 },
     update: {},
     create: {
-      id: 1,
       idChapter: 1,
       idUser: 1,
       role: 'Owner',
@@ -98,7 +94,6 @@ const seed = async () => {
     where: { id: 2 },
     update: {},
     create: {
-      id: 2,
       idChapter: 1,
       idUser: 2,
       role: 'Member',
@@ -108,7 +103,6 @@ const seed = async () => {
     where: { id: 3 },
     update: {},
     create: {
-      id: 3,
       idChapter: 2,
       idUser: 1,
       role: 'Owner',
@@ -118,10 +112,65 @@ const seed = async () => {
     where: { id: 4 },
     update: {},
     create: {
-      id: 4,
       idChapter: 3,
       idUser: 1,
       role: 'Owner',
+    },
+  });
+
+  await prisma.subject.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      idChapter: 1,
+      title: 'Cool subject',
+      details: 'So cool',
+      link: 'https://cool.org',
+      createdAt: new Date(),
+    },
+  });
+  await prisma.subjectDiscussion.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      idUser: 1,
+      idSubject: 1,
+      comment: 'I like this very much',
+      createdAt: new Date(),
+    },
+  });
+  await prisma.subjectDiscussion.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+      idUser: 2,
+      idSubject: 1,
+      comment: "Yeah nah yeah; we're cool",
+      link: 'https://so-cool.org',
+      createdAt: new Date(),
+    },
+  });
+
+  await prisma.subject.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+      idChapter: 1,
+      title: 'Awesome subject',
+      details: 'This is awesome dude',
+      createdAt: new Date(),
+    },
+  });
+
+  await prisma.subject.upsert({
+    where: { id: 3 },
+    update: {},
+    create: {
+      idChapter: 1,
+      title: 'About time we do this...',
+      details: 'What are we waiting for?',
+      createdAt: new Date(),
+      closedAt: new Date(),
     },
   });
 };

@@ -72,11 +72,13 @@ describe('AuthenticationController (e2e)', () => {
         .then((res) => {
           expect(res.body).toEqual(
             expect.objectContaining({
-              token: expect.any(String),
+              data: {
+                token: expect.any(String),
+              },
             }),
           );
-          const decoded = jwt.decode(res.body.token);
-          expect(res.body.token.split('.')).toHaveLength(3);
+          const decoded = jwt.decode(res.body.data.token);
+          expect(res.body.data.token.split('.')).toHaveLength(3);
           expect(decoded).toMatchObject(tokenPayloadMockData);
         });
     });
@@ -94,11 +96,13 @@ describe('AuthenticationController (e2e)', () => {
         .then((res) => {
           expect(res.body).toEqual(
             expect.objectContaining({
-              token: expect.any(String),
+              data: {
+                token: expect.any(String),
+              },
             }),
           );
-          const decoded = jwt.decode(res.body.token);
-          expect(res.body.token.split('.')).toHaveLength(3);
+          const decoded = jwt.decode(res.body.data.token);
+          expect(res.body.data.token.split('.')).toHaveLength(3);
           expect(decoded).toMatchObject(tokenPayloadMockData);
         });
     });
@@ -116,11 +120,13 @@ describe('AuthenticationController (e2e)', () => {
         .then((res) => {
           expect(res.body).toEqual(
             expect.objectContaining({
-              token: expect.any(String),
+              data: {
+                token: expect.any(String),
+              },
             }),
           );
-          const decoded = jwt.decode(res.body.token);
-          expect(res.body.token.split('.')).toHaveLength(3);
+          const decoded = jwt.decode(res.body.data.token);
+          expect(res.body.data.token.split('.')).toHaveLength(3);
           expect(decoded).toMatchObject(tokenPayloadMockData);
         });
     });
@@ -139,11 +145,13 @@ describe('AuthenticationController (e2e)', () => {
         .then((res) => {
           expect(res.body).toEqual(
             expect.objectContaining({
-              token: expect.any(String),
+              data: {
+                token: expect.any(String),
+              },
             }),
           );
-          const decoded = jwt.decode(res.body.token);
-          expect(res.body.token.split('.')).toHaveLength(3);
+          const decoded = jwt.decode(res.body.data.token);
+          expect(res.body.data.token.split('.')).toHaveLength(3);
           expect(decoded).toMatchObject(tokenPayloadMockData);
         });
 
@@ -154,11 +162,13 @@ describe('AuthenticationController (e2e)', () => {
         .then((res) => {
           expect(res.body).toEqual(
             expect.objectContaining({
-              token: expect.any(String),
+              data: {
+                token: expect.any(String),
+              },
             }),
           );
-          const decoded = jwt.decode(res.body.token);
-          expect(res.body.token.split('.')).toHaveLength(3);
+          const decoded = jwt.decode(res.body.data.token);
+          expect(res.body.data.token.split('.')).toHaveLength(3);
           expect(decoded).toMatchObject(tokenPayloadMockData);
         });
     });

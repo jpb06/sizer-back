@@ -22,5 +22,5 @@ module.exports = {
   coveragePathIgnorePatterns: ['/tests-related/', '.dto\\.ts'],
   coverageDirectory: './coverage',
   testEnvironment: 'node',
-  testTimeout: 10000,
+  testTimeout: 25000,
 };
