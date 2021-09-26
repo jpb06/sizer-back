@@ -8,12 +8,12 @@
 
 ## How to run
 
-```
+```bash
 yarn dev:db:mount
 ```
 
-```
+```bash
 yarn dev:db:start
-// or, if already migrated/seeded
+# or, if already migrated/seeded
 yarn dev
 ```
