@@ -8,12 +8,12 @@
 
 ## How to run
 
-```
-yarn dev:db
+```bash
+yarn dev:db:mount
 ```
 
-```
-yarn prisma migrate dev
-yarn prisma db seed
+```bash
+yarn dev:db:start
+# or, if already migrated/seeded
 yarn dev
 ```
