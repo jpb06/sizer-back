@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { transformTo } from '@util/transform-to.util';
+import { plainToClass } from 'class-transformer';
 
 import { LoginResultDto } from '@business/authentication/dto/output/login.result.dto';
 import { ApiRoute } from '@decorators/api-route';
@@ -23,6 +23,6 @@ export class AuthenticationController {
   async login(@Body() { token }: LoginBodyDto) {
     const appToken = await this.authenticationService.validateUser(token);
 
-    return transformTo(LoginResultDto, { token: appToken });
+    return plainToClass(LoginResultDto, { token: appToken });
   }
 }
