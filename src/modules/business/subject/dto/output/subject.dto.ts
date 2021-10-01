@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 
+import { ChapterDto } from '@business/chapter/dto/output/chapter.dto';
+
 @Exclude()
 export class SubjectDto {
   @Expose()
@@ -33,9 +35,5 @@ export class SubjectDto {
 
   @Expose()
   @ApiProperty()
-  chapterId: number;
-
-  @Expose()
-  @ApiProperty()
-  chapterName: string;
+  chapter: ChapterDto;
 }

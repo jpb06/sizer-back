@@ -1,6 +1,6 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { transformTo } from '@util/transform-to.util';
+import { plainToClass } from 'class-transformer';
 
 import { SubjectsService } from '@database/services/subjects.service';
 import { ApiRoute } from '@decorators/api-route';
@@ -28,6 +28,7 @@ export class SubjectController {
   @Post()
   async createSubject(@Body() subject: NewSubjectDto) {
     const createdSubject = await this.subjectsService.create(subject);
-    return transformTo(CreateSubjectResultDto, createdSubject);
+
+    return plainToClass(CreateSubjectResultDto, createdSubject);
   }
 }

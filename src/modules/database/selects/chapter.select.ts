@@ -1,4 +1,4 @@
-import { selectChapter } from '@database/prisma/helpers/chapter.selector';
+import { selectChapter } from '@database/prisma/selectors/chapter.selector';
 
 import { Chapter } from '.prisma/client';
 
