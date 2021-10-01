@@ -1,23 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 
+import { TerseUserDto } from '@business/logged-user/dto/output/terse-user.dto';
+
 @Exclude()
 export class DiscussionDto {
   @Expose()
   @ApiProperty()
   id: number;
-
-  @Expose()
-  @ApiProperty()
-  idUser: number;
-
-  @Expose()
-  @ApiProperty()
-  userFullName: string;
-
-  @Expose()
-  @ApiProperty()
-  userEmail: string;
 
   @Expose()
   @ApiProperty()
@@ -30,4 +20,8 @@ export class DiscussionDto {
   @Expose()
   @ApiProperty()
   createdAt: Date;
+
+  @Expose()
+  @ApiProperty()
+  user: TerseUserDto;
 }
