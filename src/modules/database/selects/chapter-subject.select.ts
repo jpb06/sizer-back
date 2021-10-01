@@ -1,16 +1,15 @@
 import { Chapter, Subject } from '@prisma/client';
 
-import { selectSubject } from '../prisma/helpers/subject.selector';
+import { selectSubject } from '../prisma/selectors/subject.selector';
 
 export type ChapterSubjectSelectType = Partial<Subject> & {
   chapter: Chapter | null;
   discussion: Array<{
     id: number;
-    idUser: number;
     comment: string;
     link: string | null;
     createdAt: Date;
-    user: { fullName: string | null; email: string | null } | null;
+    user: { id: number; fullName: string | null; email: string | null } | null;
   }>;
 };
 
@@ -28,11 +27,10 @@ export const chapterSubjectSelect = selectSubject({
   discussion: {
     select: {
       id: true,
-      idUser: true,
       comment: true,
       link: true,
       createdAt: true,
-      user: { select: { fullName: true, email: true } },
+      user: { select: { id: true, fullName: true, email: true } },
     },
   },
 });
